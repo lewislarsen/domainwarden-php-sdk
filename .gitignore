@@ -1,0 +1,13 @@
+# Composer
+/vendor/
+/composer.lock
+
+# PHP
+*.log
+.php_cs.cache
+phpunit.xml
+
+# IDE
+.idea/
+.vscode/
+*.swp

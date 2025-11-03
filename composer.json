@@ -1,0 +1,49 @@
+{
+    "name": "domainwarden/sdk",
+    "description": "PHP SDK for Domainwarden",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Domainwarden\\Sdk\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Domainwarden\\Sdk\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lewis Larsen",
+            "email": "lewis@larsens.dev"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^8.3|^8.4|^8.5",
+        "illuminate/support": "^12.0",
+        "illuminate/http": "^12.0",
+        "illuminate/container": "^12.0",
+        "illuminate/config": "^12.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "phpunit/phpunit": "^11.0",
+        "orchestra/testbench": "^10.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Domainwarden\\Sdk\\DomainwardenServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

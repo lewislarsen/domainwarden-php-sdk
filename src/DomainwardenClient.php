@@ -5,11 +5,13 @@ namespace Domainwarden\Sdk;
 use Domainwarden\Sdk\DataTransferObjects\CreateDomainRequest;
 use Domainwarden\Sdk\DataTransferObjects\Domain;
 use Domainwarden\Sdk\DataTransferObjects\PaginatedResponse;
+use Domainwarden\Sdk\DataTransferObjects\UpdateDomainRequest;
 use Domainwarden\Sdk\DataTransferObjects\User;
 use Domainwarden\Sdk\Exceptions\DomainwardenException;
 use Domainwarden\Sdk\Exceptions\RateLimitExceededException;
 use Domainwarden\Sdk\Exceptions\SubscriptionRequiredException;
 use Domainwarden\Sdk\Exceptions\UnauthenticatedException;
+use Domainwarden\Sdk\Exceptions\ValidationException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
@@ -56,6 +58,10 @@ class DomainwardenClient
             401 => throw UnauthenticatedException::invalidToken(),
             402 => throw new SubscriptionRequiredException(
                 $response->json('message', 'An active subscription is required to access this feature.')
+            ),
+            422 => throw new ValidationException(
+                $response->json('message', 'Validation failed.'),
+                $response->json('errors', [])
             ),
             429 => throw new RateLimitExceededException(
                 $response->json('message', 'Too many requests. Please slow down.'),
@@ -136,5 +142,41 @@ class DomainwardenClient
         $response = $this->request('get', "domains/{$id}");
 
         return Domain::fromArray($response->json() ?? []);
+    }
+
+    /**
+     * Update an existing domain.
+     *
+     * @param string $id The domain ID
+     * @param UpdateDomainRequest $request
+     * @return Domain
+     * @throws DomainwardenException
+     * @throws RateLimitExceededException
+     * @throws SubscriptionRequiredException
+     * @throws UnauthenticatedException
+     * @throws ValidationException
+     */
+    public function updateDomain(string $id, UpdateDomainRequest $request): Domain
+    {
+        $response = $this->request('patch', "domains/{$id}", $request->toArray());
+
+        return Domain::fromArray($response->json('data') ?? []);
+    }
+
+    /**
+     * Delete a domain.
+     *
+     * @param string $id The domain ID
+     * @return bool Returns true if deletion was successful
+     * @throws DomainwardenException
+     * @throws RateLimitExceededException
+     * @throws SubscriptionRequiredException
+     * @throws UnauthenticatedException
+     */
+    public function deleteDomain(string $id): bool
+    {
+        $this->request('delete', "domains/{$id}");
+
+        return true;
     }
 }

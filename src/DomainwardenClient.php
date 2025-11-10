@@ -120,4 +120,21 @@ class DomainwardenClient
 
         return Domain::fromArray($response->json() ?? []);
     }
+
+    /**
+     * Get a specific domain by ID.
+     *
+     * @param string $id The domain ID
+     * @return Domain
+     * @throws DomainwardenException
+     * @throws RateLimitExceededException
+     * @throws SubscriptionRequiredException
+     * @throws UnauthenticatedException
+     */
+    public function getDomain(string $id): Domain
+    {
+        $response = $this->request('get', "domains/{$id}");
+
+        return Domain::fromArray($response->json() ?? []);
+    }
 }

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static User user()
  * @method static PaginatedResponse domains(int $page = 1)
  * @method static Domain createDomain(CreateDomainRequest $request)
+ * @method static Domain getDomain(string $id)
  *
  * @see \Domainwarden\Sdk\DomainwardenClient
  */

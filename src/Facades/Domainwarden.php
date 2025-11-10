@@ -18,7 +18,7 @@ use Domainwarden\Sdk\DataTransferObjects\WhoisChange;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static User user()
+ * @method static User getUser()
  * @method static array getCheckIntervals()
  * @method static PaginatedResponse domains(int $page = 1)
  * @method static Domain createDomain(CreateDomainRequest $request)

@@ -25,7 +25,6 @@ use Domainwarden\Sdk\Exceptions\UnauthenticatedException;
 use Domainwarden\Sdk\Exceptions\ValidationException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DomainwardenClient
 {
@@ -46,7 +45,7 @@ class DomainwardenClient
      * @throws SubscriptionRequiredException
      * @throws UnauthenticatedException
      */
-    public function user(): User
+    public function getUser(): User
     {
         $response = $this->request('get', 'user');
 

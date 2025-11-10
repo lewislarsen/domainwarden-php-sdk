@@ -2,6 +2,7 @@
 
 namespace Domainwarden\Sdk;
 
+use Domainwarden\Sdk\DataTransferObjects\CreateDomainRequest;
 use Domainwarden\Sdk\DataTransferObjects\Domain;
 use Domainwarden\Sdk\DataTransferObjects\PaginatedResponse;
 use Domainwarden\Sdk\DataTransferObjects\User;
@@ -101,5 +102,22 @@ class DomainwardenClient
             $response->json() ?? [],
             fn($item) => Domain::fromArray($item)
         );
+    }
+
+    /**
+     * Create a new domain.
+     *
+     * @param CreateDomainRequest $request
+     * @return Domain
+     * @throws DomainwardenException
+     * @throws RateLimitExceededException
+     * @throws SubscriptionRequiredException
+     * @throws UnauthenticatedException
+     */
+    public function createDomain(CreateDomainRequest $request): Domain
+    {
+        $response = $this->request('post', 'domains', $request->toArray());
+
+        return Domain::fromArray($response->json() ?? []);
     }
 }

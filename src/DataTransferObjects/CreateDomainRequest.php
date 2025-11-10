@@ -2,16 +2,16 @@
 
 namespace Domainwarden\Sdk\DataTransferObjects;
 
-class CreateDomainRequest
+readonly class CreateDomainRequest
 {
     public function __construct(
-        public readonly string $domain,
-        public readonly string $label,
-        public readonly ?string $description = null,
-        public readonly ?string $colour = null,
-        public readonly ?string $whois_check_interval = null,
-        public readonly ?string $dns_check_interval = null,
-        public readonly ?array $enabled_dns_records = null,
+        public string  $domain,
+        public string  $label,
+        public ?string $whois_check_interval = null,
+        public ?string $dns_check_interval = null,
+        public ?array  $enabled_dns_records = null,
+        public ?string $description = null,
+        public ?string $colour = null,
     ) {}
 
     public function toArray(): array

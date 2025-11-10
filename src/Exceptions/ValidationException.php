@@ -13,8 +13,6 @@ class ValidationException extends DomainwardenException
 
     /**
      * Get all validation errors.
-     *
-     * @return array
      */
     public function getErrors(): array
     {
@@ -23,9 +21,6 @@ class ValidationException extends DomainwardenException
 
     /**
      * Get validation errors for a specific field.
-     *
-     * @param string $field
-     * @return array
      */
     public function getErrorsForField(string $field): array
     {
@@ -34,9 +29,6 @@ class ValidationException extends DomainwardenException
 
     /**
      * Check if a specific field has errors.
-     *
-     * @param string $field
-     * @return bool
      */
     public function hasErrorForField(string $field): bool
     {

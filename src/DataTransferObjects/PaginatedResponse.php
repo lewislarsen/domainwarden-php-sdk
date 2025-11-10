@@ -24,7 +24,7 @@ class PaginatedResponse
     public function toArray(): array
     {
         return [
-            'data' => array_map(fn($item) => $item->toArray(), $this->data),
+            'data' => array_map(fn ($item) => $item->toArray(), $this->data),
             'links' => $this->links->toArray(),
             'meta' => $this->meta->toArray(),
         ];

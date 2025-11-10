@@ -10,7 +10,7 @@ readonly class UpdateDomainRequest
         public ?string $colour = null,
         public ?string $whois_check_interval = null,
         public ?string $dns_check_interval = null,
-        public ?array  $enabled_dns_records = null,
+        public ?array $enabled_dns_records = null,
     ) {}
 
     public function toArray(): array

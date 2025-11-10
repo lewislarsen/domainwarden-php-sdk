@@ -10,7 +10,7 @@ class DomainwardenServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/domainwarden.php', 'domainwarden'
+            __DIR__ . '/../config/domainwarden.php', 'domainwarden'
         );
 
         $this->app->singleton(DomainwardenClient::class, function () {
@@ -34,7 +34,7 @@ class DomainwardenServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__.'/../config/domainwarden.php' => config_path('domainwarden.php'),
+            __DIR__ . '/../config/domainwarden.php' => config_path('domainwarden.php'),
         ], 'domainwarden-config');
     }
 }

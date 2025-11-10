@@ -5,11 +5,11 @@ namespace Domainwarden\Sdk\DataTransferObjects;
 readonly class CreateDomainRequest
 {
     public function __construct(
-        public string  $domain,
-        public string  $label,
+        public string $domain,
+        public string $label,
         public ?string $whois_check_interval = null,
         public ?string $dns_check_interval = null,
-        public ?array  $enabled_dns_records = null,
+        public ?array $enabled_dns_records = null,
         public ?string $description = null,
         public ?string $colour = null,
     ) {}

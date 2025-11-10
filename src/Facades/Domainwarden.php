@@ -2,6 +2,7 @@
 
 namespace Domainwarden\Sdk\Facades;
 
+use Domainwarden\Sdk\DataTransferObjects\ActivityLogItem;
 use Domainwarden\Sdk\DataTransferObjects\BulkNotificationChannelResponse;
 use Domainwarden\Sdk\DataTransferObjects\ComponentToggleResponse;
 use Domainwarden\Sdk\DataTransferObjects\CreateDomainRequest;
@@ -9,6 +10,7 @@ use Domainwarden\Sdk\DataTransferObjects\DnsChange;
 use Domainwarden\Sdk\DataTransferObjects\Domain;
 use Domainwarden\Sdk\DataTransferObjects\DomainToggleResponse;
 use Domainwarden\Sdk\DataTransferObjects\NotificationChannel;
+use Domainwarden\Sdk\DataTransferObjects\NotificationHistoryItem;
 use Domainwarden\Sdk\DataTransferObjects\PaginatedResponse;
 use Domainwarden\Sdk\DataTransferObjects\UpdateDomainRequest;
 use Domainwarden\Sdk\DataTransferObjects\User;
@@ -39,6 +41,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static NotificationChannel updateNotificationChannel(string $domainId, string $channelId, UpdateNotificationChannelRequest $request)
  * @method static BulkNotificationChannelResponse bulkAssignNotificationChannels(string $targetDomainId, string $sourceDomainId, array $notificationChannelIds)
  * @method static bool deleteNotificationChannel(string $domainId, string $channelId)
+ * @method static PaginatedResponse getNotificationHistory(string $domainId, int $page = 1)
+ * @method static NotificationHistoryItem getNotificationHistoryItem(string $domainId, string $historyId)
+ * @method static PaginatedResponse getActivityLogs(string $domainId, int $page = 1, int $perPage = 15)
+ * @method static ActivityLogItem getActivityLogItem(string $domainId, string $logId)
  *
  * @see \Domainwarden\Sdk\DomainwardenClient
  */

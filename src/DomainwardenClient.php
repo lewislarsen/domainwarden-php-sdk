@@ -2,10 +2,12 @@
 
 namespace Domainwarden\Sdk;
 
+use Domainwarden\Sdk\DataTransferObjects\ActivityLogItem;
 use Domainwarden\Sdk\DataTransferObjects\ComponentToggleResponse;
 use Domainwarden\Sdk\DataTransferObjects\CreateDomainRequest;
 use Domainwarden\Sdk\DataTransferObjects\Domain;
 use Domainwarden\Sdk\DataTransferObjects\DomainToggleResponse;
+use Domainwarden\Sdk\DataTransferObjects\NotificationHistoryItem;
 use Domainwarden\Sdk\DataTransferObjects\PaginatedResponse;
 use Domainwarden\Sdk\DataTransferObjects\UpdateDomainRequest;
 use Domainwarden\Sdk\DataTransferObjects\User;
@@ -509,5 +511,84 @@ class DomainwardenClient
         $this->request('delete', "domains/{$domainId}/notification-channels/{$channelId}");
 
         return true;
+    }
+
+    /**
+     * Get paginated notification history for a domain.
+     *
+     * @param string $domainId The domain ID
+     * @param int $page Page number
+     * @return PaginatedResponse
+     * @throws DomainwardenException
+     * @throws RateLimitExceededException
+     * @throws SubscriptionRequiredException
+     * @throws UnauthenticatedException
+     */
+    public function getNotificationHistory(string $domainId, int $page = 1): PaginatedResponse
+    {
+        $response = $this->request('get', "domains/{$domainId}/notification-channels/history?page={$page}");
+
+        return PaginatedResponse::fromArray(
+            $response->json() ?? [],
+            fn($item) => NotificationHistoryItem::fromArray($item)
+        );
+    }
+
+    /**
+     * Get a specific notification history entry.
+     *
+     * @param string $domainId The domain ID
+     * @param string $historyId The notification history ID
+     * @return NotificationHistoryItem
+     * @throws DomainwardenException
+     * @throws RateLimitExceededException
+     * @throws SubscriptionRequiredException
+     * @throws UnauthenticatedException
+     */
+    public function getNotificationHistoryItem(string $domainId, string $historyId): NotificationHistoryItem
+    {
+        $response = $this->request('get', "domains/{$domainId}/notification-channels/history/{$historyId}");
+
+        return NotificationHistoryItem::fromArray($response->json() ?? []);
+    }
+
+    /**
+     * Get paginated activity logs for a domain.
+     *
+     * @param string $domainId The domain ID
+     * @param int $page Page number
+     * @param int $perPage Items per page (max 100)
+     * @return PaginatedResponse
+     * @throws DomainwardenException
+     * @throws RateLimitExceededException
+     * @throws SubscriptionRequiredException
+     * @throws UnauthenticatedException
+     */
+    public function getActivityLogs(string $domainId, int $page = 1, int $perPage = 15): PaginatedResponse
+    {
+        $response = $this->request('get', "domains/{$domainId}/activity-logs?page={$page}&per_page={$perPage}");
+
+        return PaginatedResponse::fromArray(
+            $response->json() ?? [],
+            fn($item) => ActivityLogItem::fromArray($item)
+        );
+    }
+
+    /**
+     * Get a specific activity log entry.
+     *
+     * @param string $domainId The domain ID
+     * @param string $logId The activity log ID
+     * @return ActivityLogItem
+     * @throws DomainwardenException
+     * @throws RateLimitExceededException
+     * @throws SubscriptionRequiredException
+     * @throws UnauthenticatedException
+     */
+    public function getActivityLogItem(string $domainId, string $logId): ActivityLogItem
+    {
+        $response = $this->request('get', "domains/{$domainId}/activity-logs/{$logId}");
+
+        return ActivityLogItem::fromArray($response->json() ?? []);
     }
 }

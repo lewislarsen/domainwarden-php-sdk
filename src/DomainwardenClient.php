@@ -18,12 +18,14 @@ use Domainwarden\Sdk\DataTransferObjects\UpdateNotificationChannelRequest;
 use Domainwarden\Sdk\DataTransferObjects\User;
 use Domainwarden\Sdk\DataTransferObjects\WhoisChange;
 use Domainwarden\Sdk\Exceptions\DomainwardenException;
+use Domainwarden\Sdk\Exceptions\NotFoundException;
 use Domainwarden\Sdk\Exceptions\RateLimitExceededException;
 use Domainwarden\Sdk\Exceptions\SubscriptionRequiredException;
 use Domainwarden\Sdk\Exceptions\UnauthenticatedException;
 use Domainwarden\Sdk\Exceptions\ValidationException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DomainwardenClient
 {
@@ -576,6 +578,7 @@ class DomainwardenClient
             402 => throw new SubscriptionRequiredException(
                 $response->json('message', 'An active subscription is required to access this feature.')
             ),
+            404 => throw new NotFoundException($response->json('message', 'Resource not found.')),
             422 => throw new ValidationException(
                 $response->json('message', 'Validation failed.'),
                 $response->json('errors', [])
